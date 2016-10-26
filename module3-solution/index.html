@@ -1,28 +1,49 @@
 <!doctype html>
-<html lang="en">
+<html ng-app='NarrowItDownApp'>
   <head>
     <title>Narrow Down Your Menu Choice</title>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/styles.css">
   </head>
 <body>
-   <div class="container">
+  <div ng-controller='NarrowItDownController as list' class="container">
     <h1>Narrow Down Your Chinese Menu Choice</h1>
-
+ 
     <div class="form-group">
       <input type="text" placeholder="search term" class="form-control">
     </div>
     <div class="form-group narrow-button">
-      <button class="btn btn-primary">Narrow It Down For Me!</button>
+      <button ng-click="list.logMenuItems()" class="btn btn-primary">Narrow It Down For Me!</button>
     </div>
-
+   
     <!-- Bonus loader (see Bonus section of the assignment) -->
+	<br><br><br>
+    
+    <found-items
+        items="list.categories"
+        title="{{list.title}}"
+        on-remove="list.removeItem(index)">
+    </found-items>
+    	
+    [<li ng-repeat="category in list.categories.menu_items">
+      <!-- (<a href="" ng-click="menu.logMenuItems(category.short_name);">{{ category }}</a>)  -->
+      {{ category.name }}
+    </li>]
+    
+         
     <items-loader-indicator></items-loader-indicator>
 
     <!-- found-items should be implemented as a component -->
-    <found-items found-items="...." on-remove="...."></found-items>
+    <!-- <found-items found-items="...." on-remove="...."></found-items>  -->
+
+    
+    {{ menu }}
   </div>
 
+<script src="angular.min.js"></script>
+<script src="app.js"></script>  
+  
 </body>
 </html>
