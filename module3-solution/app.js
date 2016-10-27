@@ -52,17 +52,18 @@ function NarrowItDownController(MenuSearchService) { // NEW
   var found = MenuSearchService.getMatchedMenuItems();
   console.log("yyy");
   found.then(function (response) {
-    menu.categories = response.data;
+    menu.categories = response;
   })
   .catch(function (error) {
     console.log("Something went terribly wrong.");
   });
 
-  menu.logMenuItems = function (shortName) {
-    var found = MenuSearchService.getMatchedMenuItems(searchName);
-    console.log("shortName: ", shortName);
+  menu.logMenuItems = function (searchName) {
+    found = MenuSearchService.getMatchedMenuItems(searchName);
+    console.log("searchName: ", searchName);
     found.then(function (response) {
-      console.log(response.data);
+      console.log(response);
+      menu.categories = response
     })
     .catch(function (error) {
       console.log(error);
@@ -75,25 +76,28 @@ function NarrowItDownController(MenuSearchService) { // NEW
 MenuSearchService.$inject = ['$http', 'ApiBasePath'];
 function MenuSearchService($http, ApiBasePath) {
 	var service = this;
+	
 	console.log("zzz");
-	service.getMatchedMenuItems = function (searchName) {
+	service.getMatchedMenuItems = function(searchName) {
 		return $http({
 			method: "GET",
 			url: (ApiBasePath + "/menu_items.json")
 		}).then( function (result) {
 		
-			service.foundItems = result;
-			console.log("I getMatchedMenuItems", service.foundItems);
+			service.foundItems = result.data;
+			console.log("I getMatchedMenuItems - before: ", service.foundItems);
 			
-		    for (var i = 0; i < service.foundItems.data.menu_items.length; i++) {
-		      var name = service.foundItems.data.menu_items[i].name;
-		      console.log("Name: ", name);
+		    for (var i = 0; i < service.foundItems.menu_items.length; i++) {
+		      var name = service.foundItems.menu_items[i].description;
+		      if (name.indexOf(searchName) > -1) {
+		        service.foundItems.menu_items.splice(i, 1);
+		      }
 		    }
-			
+            console.log("I getMatchedMenuItems - after: ", service.foundItems);
+			 
 			return service.foundItems; 
 			
 		});
-		
 	};
 }
 
