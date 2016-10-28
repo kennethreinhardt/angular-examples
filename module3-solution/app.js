@@ -16,23 +16,23 @@ function FoundItemsListDirective() {
       onRemove: '&'
     },
     controller: MenuListDirectiveController,
-    controllerAs: 'list',
+    controllerAs: '$list',
     bindToController: true
   };
 
   return ddo;
 }
 
+MenuListDirectiveController.$inject = ['$scope', '$element'];
+function MenuListDirectiveController($scope, $element) {
+  var $list = this;
 
-function MenuListDirectiveController() {
-  var list = this;
-
-  list.cookiesInList = function () {
-    if (!(list.items == undefined || list.items.menu_items === undefined)) {
-      console.log("LIST: ", list);
-      console.log("My debug: ", list.items.menu_items.length);
-      for (var i = 0; i < list.items.menu_items.length; i++) {
-        var name = list.items.menu_items[i].name;
+  $list.cookiesInList = function () {
+    if (!($list.items == undefined || $list.items.menu_items === undefined)) {
+      console.log("LIST: ", $list);
+      console.log("My debug: ", $list.items.menu_items.length);
+      for (var i = 0; i < $list.items.menu_items.length; i++) {
+        var name = $list.items.menu_items[i].name;
         if (name.toLowerCase().indexOf("cookie") !== -1) {
           return true;
         }
@@ -41,6 +41,12 @@ function MenuListDirectiveController() {
  
     return false;
   };
+
+  $list.remove = function (myIndex) {
+    console.log("Remove index of list")
+    $list.onRemove({ index: myIndex });
+  };
+
 }
 
 
@@ -76,27 +82,27 @@ function NarrowItDownController(MenuSearchService) { // NEW
 MenuSearchService.$inject = ['$http', 'ApiBasePath'];
 function MenuSearchService($http, ApiBasePath) {
 	var service = this;
-	
-	console.log("zzz");
+
 	service.getMatchedMenuItems = function(searchName) {
 		return $http({
 			method: "GET",
 			url: (ApiBasePath + "/menu_items.json")
 		}).then( function (result) {
-		
 			service.foundItems = result.data;
-			console.log("I getMatchedMenuItems - before: ", service.foundItems);
-			
-		    for (var i = 0; i < service.foundItems.menu_items.length; i++) {
-		      var name = service.foundItems.menu_items[i].description;
-		      if (name.indexOf(searchName) > -1) {
-		        service.foundItems.menu_items.splice(i, 1);
-		      }
-		    }
-            console.log("I getMatchedMenuItems - after: ", service.foundItems);
-			 
+			if (searchName != undefined) {
+    		    for (var i = 0; i < service.foundItems.menu_items.length; i++) {
+    		      var item = service.foundItems.menu_items[i];
+    		      if (item.description === undefined || item.description === "" || 
+    		          item.description.indexOf(searchName) == -1) {
+    		        service.foundItems.menu_items.splice(i, 1);
+    		        i--;
+    		      } 
+    		    }
+    		    if (searchName == "") {
+    		      service.foundItems.menu_items = []; 
+    		    }
+			}
 			return service.foundItems; 
-			
 		});
 	};
 }

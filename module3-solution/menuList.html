@@ -1,7 +1,7 @@
 <ol>
-  <li ng-repeat="item in list.items">
+  <li ng-repeat="item in $list.items">
     {{ item.name }}: {{ item.description }}
-    <button ng-click="list.onRemove({index: $index});">Remove Item</button>
+    <button ng-click="$list.onRemove({index: $index});" class="btn btn-secondary">Remove Item</button>
   </li>
 </ol>
-<div class="error" ng-if="list.cookiesInList()">WARNING! WARNING! COOKIES DETECTED!</div>
+<div class="error" ng-if="$list.cookiesInList()">WARNING! WARNING! COOKIES DETECTED!</div>
