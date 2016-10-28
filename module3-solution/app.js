@@ -23,12 +23,12 @@ function FoundItemsListDirective() {
   return ddo;
 }
 
-MenuListDirectiveController.$inject = ['$rootScope', '$element', '$q']
-function MenuListDirectiveController($rootScope, $element, $q) {
-  var $list = this;
 
+function MenuListDirectiveController() {
+  var $list = this;
+  
   $list.isListEmpty = function () {
-    console.log("Cookies in list");
+    console.log("Cookies in list", $list);
     if (!($list.items === undefined)) {
         console.log("lists is not undefined");
         if ($list.items.length == 0) {
@@ -58,9 +58,7 @@ NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) { // NEW
 
   var menu = this;
-  console.log("aaa");
   var found = MenuSearchService.getMatchedMenuItems();
-  console.log("yyy");
   found.then(function (response) {
     menu.categories = response;
   })
