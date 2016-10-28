@@ -23,28 +23,32 @@ function FoundItemsListDirective() {
   return ddo;
 }
 
-MenuListDirectiveController.$inject = ['$scope', '$element'];
-function MenuListDirectiveController($scope, $element) {
+MenuListDirectiveController.$inject = ['$rootScope', '$element', '$q']
+function MenuListDirectiveController($rootScope, $element, $q) {
   var $list = this;
 
-  $list.cookiesInList = function () {
-    if (!($list.items == undefined || $list.items.menu_items === undefined)) {
-      console.log("LIST: ", $list);
-      console.log("My debug: ", $list.items.menu_items.length);
-      for (var i = 0; i < $list.items.menu_items.length; i++) {
-        var name = $list.items.menu_items[i].name;
-        if (name.toLowerCase().indexOf("cookie") !== -1) {
+  $list.isListEmpty = function () {
+    console.log("Cookies in list");
+    if (!($list.items === undefined)) {
+        console.log("lists is not undefined");
+        if ($list.items.length == 0) {
+          console.log("True");
           return true;
+          
+        } else {
+          console.log("False")
+          return false;
         }
-      }
     }
  
     return false;
   };
 
   $list.remove = function (myIndex) {
-    console.log("Remove index of list")
     $list.onRemove({ index: myIndex });
+    console.log("Remove index of list", myIndex);
+    console.log($list);
+    $list.items.splice(myIndex, 1)
   };
 
 }

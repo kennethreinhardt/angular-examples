@@ -15,7 +15,7 @@ angular.module('ShoppingListComponentApp', [])
 });
 
 ShoppingListComponentController.$inject = ['$scope', '$element']
-function ShoppingListComponentController() {
+function ShoppingListComponentController($scope, $element) {
   var $ctrl = this;
 
   $ctrl.cookiesInList = function () {
