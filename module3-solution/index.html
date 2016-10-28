@@ -18,24 +18,17 @@
     <div class="form-group narrow-button">
       <button ng-click="list.logMenuItems(searchTerm)" class="btn btn-primary">Narrow It Down For Me!</button>
     </div>
-   
-    <!-- Bonus loader (see Bonus section of the assignment) -->
+    
 	<br><br><br>
     
     <found-items
         items="list.categories.menu_items"
         on-remove="list.categories.removeItem(index)">
     </found-items>
-
-
          
+    <!-- Bonus loader (see Bonus section of the assignment) -->
     <items-loader-indicator></items-loader-indicator>
-
-    <!-- found-items should be implemented as a component -->
-    <!-- <found-items found-items="...." on-remove="...."></found-items>  -->
-
     
-    {{ menu }}
   </div>
 
 <script src="angular.min.js"></script>

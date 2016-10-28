@@ -28,26 +28,14 @@ function MenuListDirectiveController() {
   var $list = this;
   
   $list.isListEmpty = function () {
-    console.log("Cookies in list", $list);
     if (!($list.items === undefined)) {
-        console.log("lists is not undefined");
-        if ($list.items.length == 0) {
-          console.log("True");
-          return true;
-          
-        } else {
-          console.log("False")
-          return false;
-        }
+      return ($list.items.length == 0);
     }
- 
-    return false;
+    return false
   };
 
   $list.remove = function (myIndex) {
     $list.onRemove({ index: myIndex });
-    console.log("Remove index of list", myIndex);
-    console.log($list);
     $list.items.splice(myIndex, 1)
   };
 
@@ -68,9 +56,7 @@ function NarrowItDownController(MenuSearchService) { // NEW
 
   menu.logMenuItems = function (searchName) {
     found = MenuSearchService.getMatchedMenuItems(searchName);
-    console.log("searchName: ", searchName);
     found.then(function (response) {
-      console.log(response);
       menu.categories = response
     })
     .catch(function (error) {
@@ -90,21 +76,21 @@ function MenuSearchService($http, ApiBasePath) {
 			method: "GET",
 			url: (ApiBasePath + "/menu_items.json")
 		}).then( function (result) {
-			service.foundItems = result.data;
+			service.found = result.data;
 			if (searchName != undefined) {
-    		    for (var i = 0; i < service.foundItems.menu_items.length; i++) {
-    		      var item = service.foundItems.menu_items[i];
+    		    for (var i = 0; i < service.found.menu_items.length; i++) {
+    		      var item = service.found.menu_items[i];
     		      if (item.description === undefined || item.description === "" || 
     		          item.description.indexOf(searchName) == -1) {
-    		        service.foundItems.menu_items.splice(i, 1);
+    		        service.found.menu_items.splice(i, 1);
     		        i--;
     		      } 
     		    }
     		    if (searchName == "") {
-    		      service.foundItems.menu_items = []; 
+    		      service.found.menu_items = []; 
     		    }
 			}
-			return service.foundItems; 
+			return service.found; 
 		});
 	};
 }
