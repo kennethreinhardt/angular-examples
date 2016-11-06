@@ -1,8 +1,8 @@
 (function () {
 
-angular.module('RoutingApp',['ui.router']);
+angular.module('MenuApp',['ui.router']);
 
-angular.module('RoutingApp')
+angular.module('MenuApp')
 .config(RoutesConfig);
 
 RoutesConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -21,6 +21,11 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     .state('tab2', {
       url: '/tab2',
       templateUrl: 'src/tab2.html'
+    })
+    
+    .state('tab3', {
+      url: '/tab3',
+      templateUrl: 'src/tab3.html'
     });
 }
 
