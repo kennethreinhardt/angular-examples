@@ -3,16 +3,15 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Intro to ui-router</title>
+    <title>Welcome to our Restaurant</title>
   </head>
   <body>
-    <h1>Intro to ui-router</h1>
+    <h1>Welcome to our Restaurant</h1>
 
     <div class="tabs">
-      <a ui-sref="tab1" ui-sref-active="activeTab">Tab 1</a>
-      <a ui-sref="tab2" ui-sref-active="activeTab">Tab 2</a>
-      <a ui-sref="tab3" ui-sref-active="activeTab">Tab 3</a>
-      <!-- <button ui-sref="tab2">Tab 2</button> -->
+      <a ui-sref="tab1" ui-sref-active="activeTab">Home</a>
+      <a ui-sref="tab2" ui-sref-active="activeTab">Categories</a>
+      <a ui-sref="tab3" ui-sref-active="activeTab">Items</a>
     </div>
 
     <ui-view></ui-view>
@@ -26,18 +25,5 @@
     <!-- Modules -->
     <script src="src/menuapp.module.js"></script>
     <script src="src/data.module.js"></script>
-
-<!-- 
-    <script src="src/categories.component.js"></script>
- -->
-    <!-- 'ShoppingList' module artifacts
-    <script src="src/shoppinglist/main-shoppinglist.controller.js"></script>
-    <script src="src/shoppinglist/shoppinglist.service.js"></script>
-    <script src="src/shoppinglist/item-detail.controller.js"></script>
-     -->
-
-
-
-
   </body>
 </html>
